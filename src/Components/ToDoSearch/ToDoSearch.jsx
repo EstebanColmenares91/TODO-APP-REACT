@@ -2,8 +2,8 @@ import { React } from "react";
 import { useState } from "react";
 import './ToDoSearch.css'
 
-function ToDoSearch() {
-    const [searchState, setSearchValue] = useState('');
+function ToDoSearch({ searchValue, setSearchValue }) {
+    // const [searchState, setSearchValue] = useState('');
 
     const inputValue = (event) => {
         /* console.log(event.target.value); */
@@ -14,10 +14,9 @@ function ToDoSearch() {
         <input
             className="search"
             placeholder="Buscar ToDo"
-            value={searchState}
+            value={searchValue}
             onChange={inputValue}
         />,
-        <p>{searchState}</p>
     ];
 }
 

@@ -1,7 +1,8 @@
 import { React } from "react";
 import './ToDoCounter.css'
 
-function ToDoCounter(params) {
+// Destructurando los props que pasamos al componente
+function ToDoCounter({ total, completed }) {
     return(
         <div className="counter-container">
             <section className="name-Date">
@@ -9,7 +10,7 @@ function ToDoCounter(params) {
                 <p>Fecha: 7/09/2022</p>
             </section>
             <section className="">
-                <h2 className="title">You have completed 2/3 ToDo's</h2>
+                <h2 className="title">You have completed { completed } ToDo's of { total }</h2>
             </section>
         </div>
     )
