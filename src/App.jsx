@@ -50,7 +50,7 @@ const todosArray = [
   {text:'Agregar Fecha al ToDo', completed:true},
   {text:'Agregar boton de modo oscuro', completed:false},
   {text:'Hacer un banner para el todo', completed:false},
-  {text:'Llorar con React', completed:true}
+  {text:'Llorar con React', completed:true},
 ];
 
 const App = () => {
@@ -88,15 +88,10 @@ const App = () => {
 
   const completeTodos = (text) => {
     const todoIndex = todos.findIndex(todo => todo.text === text);
-    /* todos[todoIndex] = {
-      text: todos[todoIndex].text,
-      completed: true,
-    } */
     const newTodos = [...todos];
     newTodos[todoIndex].completed = true;
     setTodos(newTodos)
   }
-
 
   /* 
     Eliminando TODOs
