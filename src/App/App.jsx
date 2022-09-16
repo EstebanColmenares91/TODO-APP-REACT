@@ -14,38 +14,60 @@ import { AppUI } from "./AppUI"
  */
 
 function useLocalStorage(itemName, initialValue) {
-  const localStorageItems = localStorage.getItem(itemName);
-  let parsedItems;
-  
-  if (!localStorageItems) {
-    localStorage.setItem(itemName, JSON.stringify(initialValue))
-    parsedItems = [];
-  } else {
-    try {
-      parsedItems = JSON.parse(localStorageItems);
-    } catch (error) {
-      console.warn(error);
-    }
-  }
-  // Estado inicial de los Items
-  const [items, setItems] = useState(parsedItems);
+    // Estado inicial de los Items
+    const [items, setItems] = useState(initialValue);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      try {
+        const localStorageItems = localStorage.getItem(itemName);
+        let parsedItems;
+
+        if (!localStorageItems) {
+          localStorage.setItem(itemName, JSON.stringify(initialValue))
+          parsedItems = [];
+        } else {
+          parsedItems = JSON.parse(localStorageItems);
+        }
+
+        setItems(parsedItems);
+        setLoading(false)
+      } catch (error) {
+        setError(error)
+      }    
+    }, 1000)
+  })
+
   // Guardando Items
   const saveItems = (newItems) => {
-    const ItemsStringified = JSON.stringify(newItems);
-    localStorage.setItem(itemName, ItemsStringified);
-    setItems(newItems)
+    try {
+      const ItemsStringified = JSON.stringify(newItems);
+      localStorage.setItem(itemName, ItemsStringified);
+      setItems(newItems)
+    } catch (error) {
+      setError(error)
+    }
   }
 
-  return [
+  return {
     items,
     saveItems,
-  ];
+    loading,
+    error,
+  };
 }
 
 
 const App = () => {
-  const [todos, saveTodos] = useLocalStorage('TODOS_V1', []);
-  
+  const {
+    items: todos,
+    saveItems: saveTodos,
+    loading,
+    error,
+  } = useLocalStorage('TODOS_V1', []);
+
   //Cantidad de todos completados 
   // filtrar cada todo cuando este sea verdadero (true)
   const completedTodos = todos.filter((todo) => todo.completed).length;
@@ -66,7 +88,7 @@ const App = () => {
     searchedTodos = todos.filter((todo) => {
       const todoText = todo.text.toLowerCase();
       const searchText = searchStateValue.toLowerCase();
-      
+
       return todoText.includes(searchText);
     })
   }
@@ -95,17 +117,17 @@ const App = () => {
     saveTodos(newTodos)
   }
 
-  console.log(searchedTodos);
-
-  return(
+  return (
     <AppUI
-      totalTodos = {totalTodos}
-      completedTodos = {completedTodos}
-      searchStateValue = {searchStateValue}
-      setSearchValue = {setSearchValue}
-      searchedTodos  =  {searchedTodos}
-      completeTodos = {completeTodos}
-      deleteTodos  =  {deleteTodos}
+      loading={loading}
+      error={error}
+      totalTodos={totalTodos}
+      completedTodos={completedTodos}
+      searchStateValue={searchStateValue}
+      setSearchValue={setSearchValue}
+      searchedTodos={searchedTodos}
+      completeTodos={completeTodos}
+      deleteTodos={deleteTodos}
     />
   );
 }
