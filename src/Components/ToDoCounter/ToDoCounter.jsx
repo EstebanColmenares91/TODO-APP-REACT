@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { TodoContext } from "../context/ToDoContext";
 import './ToDoCounter.css'
 
-const date = new Date;
+const date = new Date();
 const [day, month, year] = [date.getDate(), date.getMonth(), date.getFullYear()]
 // Destructurando los props que pasamos al componente
 

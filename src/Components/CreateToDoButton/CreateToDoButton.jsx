@@ -1,10 +1,12 @@
 import { React } from "react";
 import './CreateToDoButton.css'
 
-function CreateToDoButton() {
-    const msg = () => {alert("Crear una nueva tarea")}
-    return(
-        <button onClick={msg} className="createToDo">+</button>
+function CreateToDoButton(props) {
+    const onClickButton = () => {
+        props.setOpenModal(prevState => !prevState)
+    }
+    return (
+        <button onClick={onClickButton} className="createToDo">+</button>
     )
 }
 

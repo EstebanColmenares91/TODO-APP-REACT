@@ -9,7 +9,6 @@
     background-color: #9aa4b5;
     color: white;
     cursor: pointer;
-    position: absolute;
 
     transform: rotate(0);
     transition: .3s ease;
@@ -17,4 +16,8 @@
 
 .createToDo:hover{
     transform: rotate(270deg);
+}
+
+.createToDo{
+    z-index: 10;
 }

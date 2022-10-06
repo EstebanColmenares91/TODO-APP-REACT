@@ -7,7 +7,6 @@ function ToDoSearch() {
     const { searchValue, setSearchValue } = useContext(TodoContext)
 
     const inputValue = (event) => {
-        console.log(event.target.value);
         setSearchValue(event.target.value);
     }
 
